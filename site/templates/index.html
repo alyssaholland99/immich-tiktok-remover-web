@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<head>
+    <title>Immich TikTok remover</title>
+</head>
+<br>
+<body>
+    <div class="container center">
+        <h1>Remove TikTok videos from your Immich instance</h1>
+        <form method="POST">
+            <label for="user_input">Immich URL: </label>
+            <input placeholder="https://my.immich.app/" type="text" id="immich_url" name="immich_url" required>
+            <br>
+            <label for="user_input">Immich API Key: </label>
+            <input placeholder="eyJhbGciOiJIUzI1NiIsInR..." type="text" id="immich_api" name="immich_api" required>
+            <br>
+            <div class="form-row">
+                <label for="repeat">Run every 24hrs?</label>
+                <input type="checkbox" id="repeat" name="repeat" value="false">
+            </div>
+            <br>
+            <button type="submit">Start</button>
+        </form>
+
+        {% if api_response %}
+        <hr>
+            <h2>Status:</h2>
+            <pre class="{% if response_code == 200 %}success-response{% else %}error-response{% endif %}">{{ api_response }} </pre>
+        {% endif %}
+
+        <hr>
+        <h2>How to use this tool</h2>
+            <ol>
+                <li>Go to your Immich instance here: <a href="https://my.immich.app/user-settings?isOpen=api-keys">https://my.immich.app/user-settings?isOpen=api-keys</a></li>
+                <li>Generate a new API key</li>
+                <li>Name it to something that you can recognise later on (`immich-tiktok-remover` for example)</li>
+                <li>You only need the `asset.read` permission for this site to work.</li>
+                <li>Click create and copy the api key into the `Immich API Key` box above</li>
+                <li>Paste in your immich server url (including http/https)</li>
+                <li>Select if you want this took to run every 24hrs</li>
+            </ol>
+
+            <p>You should notice the tool running by chcecking your trash folder and seeing TikTok videos in there. Please check the trash folder occasionally to check that there haven't been any legitimate files that have been trashed. 
+                I haven't had a single issue with this tool since I started using it a year ago but mistakes happen and it's always worth checking</p>
+
+            <p>If you want to stop this tool from running, simply delete the API key you created in step #1; the pod on the cluster should stop automatically.</p>
+
+            <h4>Please note that this tool has a rate limit of 3hrs.</h4>
+        <hr>
+        <h2>Is it safe?</h2>
+            <p>
+                All the code is available on GitHub here: <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> which you're free to check.
+                <br><br>
+                There's always a risk when you send your API key to an external service. Any keys sent are only stored in a kubernetes cluster for the deployments to use. 
+                To reduce the chance of a leak causing issues with your immich server I would recommend to only add the needed permissions for this tool to work (`asset.read` only)
+                <br><br>
+                If you would like to mitigate the risk, you can always delete the API key after running this tool. This is obviously only an option when not running every 24hrs as the key will be useless. 
+                <br><br>
+                Any security concerns/enquiries can be sent to <a href="mailto:alyssa@alyssaserver.co.uk">alyssa@alyssaserver.co.uk</a>
+            </p>
+        <hr>
+        <h2>How does it work</h2>
+            <p>
+                I run a personal server 24/7 and it annoyed me that there weren't any easy ways to remove TikTok videos. I found <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> by Marcus-indrek Simmer and decided to turn it into a web app.
+                <br><br>
+                I also run a kubernetes cluster that's currently heavily under utilised. When you send an api requests to my server, it spins up a new deployment and runs the project on one of the nodes, therefore not loading my primary server too much. It won't be fast by any means, the nodes are low power mini PCs and can only do so much. 
+            </p>
+    </div>
+</body>
+</html>

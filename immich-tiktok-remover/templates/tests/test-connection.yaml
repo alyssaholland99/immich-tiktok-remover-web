@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "immich-tiktok-remover.fullname" . }}-test-connection"
+  labels:
+    {{- include "immich-tiktok-remover.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "immich-tiktok-remover.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
+  affinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - cerberus1
+          - cerberus2
+          - cerberus3
