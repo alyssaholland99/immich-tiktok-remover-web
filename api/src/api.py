@@ -40,7 +40,7 @@ def remove_tiktoks():
     if repeat:
         os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, "immich-tiktok-remover-" + get_hash(filename), "immich-tiktok-remover-" + get_hash(filename), ("immich-tiktok-remover-" + get_hash(filename))[:53]))
     else:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, "immich-tiktok-remover-" + get_hash(filename), "immich-tiktok-remover-" + get_hash(filename), ("immich-tiktok-remover-" + get_hash(filename))[:53]))
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, "immich-tiktok-remover-" + get_hash(filename), "immich-tiktok-remover-" + get_hash(filename), ("immich-tiktok-remover-" + get_hash(filename))[:53]))
 
     return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.', 200
 
