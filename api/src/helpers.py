@@ -15,9 +15,7 @@ def cache_file_exists(filename):
     return os.path.isfile(get_path(filename))
 
 def within_24h(filename):
-
-    return False
-
+    
     user = open(get_path(filename), "r", encoding='utf-8')
     file_time = int(user.read())
     user.close()
