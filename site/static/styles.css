@@ -6,6 +6,7 @@
 body {
     margin: 0;
     padding: 0;
+    min-width: auto;
     font-family: Arial, sans-serif;
     background-color: #f5f7fa;
     height: 100vh;
@@ -16,7 +17,7 @@ body {
 /* Container to hold everything */
 .container {
     text-align: center;
-    min-width: 800px;
+    min-width: auto;
     max-width: 1500px;
     width: 100%;
     padding: 2rem;
