@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import subprocess, os, validators, time, re, requests, json
+import subprocess, os, validators, time, re, requests
 
 from helpers import *
 
@@ -87,13 +87,9 @@ def kube_logs():
         if not "Progress:" in l:
             pod_log_filter += l + '<br>'
 
-    #pod_log_filter = pod_log_filter.replace("[1;32;40m", "").replace("[0m", "")
+    pod_log_filter = pod_log_filter.replace("[1;32;40m", "").replace("[0m", "")
 
-    print(pod_log_filter)
-
-    response = Flask.make_response(pod_log_filter, 200)
-    response.mimetype = "text/plain"
-    return response
+    return pod_log_filter, 200
 
 if __name__ == '__main__':
     app.run(host="192.168.0.126")
