@@ -87,7 +87,9 @@ def kube_logs():
         if not "Progress:" in l:
             pod_log_filter += l + '<br>'
 
-    return pod_log_filter.replace("[1;32;40m", "").replace("[0m", ""), 200
+    pod_log_filter = pod_log_filter.replace("[1;32;40m", "").replace("[0m", "")
+
+    return jsonify(pod_log_filter, status=200, mimetype='application/json'), 200
 
 if __name__ == '__main__':
     app.run(host="192.168.0.126")
