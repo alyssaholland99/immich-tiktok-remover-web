@@ -47,12 +47,12 @@ def remove_tiktoks():
 
     immich_tiktok_pods = os.popen("kubectl get pods -n immich-tiktok-remover-api --no-headers | awk '{print $1}'").read()
 
-    time.sleep(5)
+
     pod_id = ""
-    for pod in immich_tiktok_pods.splitlines():
-        if fullname_override in pod:
-            pod_id = pod
-            pass
+    while pod_id == "":
+        for pod in immich_tiktok_pods.splitlines():
+            if fullname_override in pod:
+                pod_id = pod
 
     return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nContainer ID: ' + pod_id, 200
 
