@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_request
+from flask import Flask, jsonify, request
 import subprocess, os, validators, time, re, requests, json
 
 from helpers import *
