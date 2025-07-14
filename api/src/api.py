@@ -89,6 +89,9 @@ def kube_logs():
 
     pod_log_filter = pod_log_filter.replace("[1;32;40m", "").replace("[0m", "")
 
+    if pod_log_filter == "":
+        pod_log_filter = "Pod initialising... Please wait."
+
     return pod_log_filter, 200
 
 if __name__ == '__main__':
