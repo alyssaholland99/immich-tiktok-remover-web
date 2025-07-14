@@ -7,8 +7,8 @@ def cleanup():
     for pod in immich_tiktok_pods.splitlines():
         if ("Invalid API key" in os.popen("kubectl logs {} --tail 12 -n immich-tiktok-remover-api".format(pod)).read()) or ("immich_end" in os.popen("kubectl logs {} --tail 12 -n immich-tiktok-remover-api".format(pod)).read()):
             deployment_name = pod.split("-")[0] + "-" + pod.split("-")[1]
-            os.popen("kubectl delete deployment {} -n immich-tiktok-remover-api".format(pod[:-15]))
-            print("Deleted deployment {}".format(pod[:-15]))
+            os.popen("kubectl delete deployment {} -n immich-tiktok-remover-api".format(deployment_name))
+            print("Deleted deployment {}".format(deployment_name))
         else:
             print("{} is still running".format(pod))
 
