@@ -89,6 +89,8 @@ def kube_logs():
 
     pod_log_filter = pod_log_filter.replace("[1;32;40m", "").replace("[0m", "")
 
+    print(pod_log_filter)
+
     return jsonify(pod_log_filter, status=200, mimetype='application/json'), 200
 
 if __name__ == '__main__':
