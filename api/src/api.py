@@ -23,7 +23,7 @@ def remove_tiktoks():
     if not key_valid(immich_api_key):
         return 'Not a valid API key', 400
 
-    filename = "{}_{}".format(immich_url, immich_api_key[:10])
+    filename = "{}_{}".format(immich_url, immich_api_key)
 
     if too_many_requests(filename):
         return 'You can only use this service once every 3 hours', 429
@@ -36,13 +36,16 @@ def remove_tiktoks():
     
     if cache_file_exists(filename):
         os.system('helm uninstall {} -n immich-tiktok-remover-api'.format(("immich-tiktok-remover-" + get_hash(filename))[:53]))
-    
-    if repeat:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, "immich-tiktok-remover-" + get_hash(filename), "immich-tiktok-remover-" + get_hash(filename), ("immich-tiktok-remover-" + get_hash(filename))[:53]))
-    else:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, "immich-tiktok-remover-" + get_hash(filename), "immich-tiktok-remover-" + get_hash(filename), ("immich-tiktok-remover-" + get_hash(filename))[:53]))
 
-    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.', 200
+    fullname_override = "itr-" + get_hash(filename)
+    secret_name = "immich-tiktok-remover-" + get_hash(filename)
+
+    if repeat:
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
+    else:
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
+
+    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nContainer ID: ' + fullname_override, 200
 
 @app.route('/stop', methods=['POST'])
 def remove_deployment():
@@ -68,6 +71,23 @@ def remove_deployment():
     else:
         return 'No job with these parameters exist', 404
 
+@app.route('/logs', methods=['GET'])
+def kube_logs():
+    payload = request.get_json()
+    print(payload)
+    pod_id = request.args.get('pod_id')
+
+    command = 'kubectl logs {} -n immich-tiktok-remover-api --tail 20 | tr -d \'█\''.format(pod_id)
+
+    pod_logs = os.popen(command).read()
+
+    pod_log_filter = ""
+
+    for l in pod_logs.splitlines():
+        if not "Progress:" in l:
+            pod_log_filter += l + '<br>'
+
+    return pod_log_filter.replace("[1;32;40m", "").replace("[0m", ""), 200
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="192.168.0.126")
