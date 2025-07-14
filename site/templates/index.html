@@ -28,7 +28,10 @@
             <h2>Status:</h2>
             <pre class="{% if response_code == 200 %}success-response{% else %}error-response{% endif %}">{{ api_response }} </pre>
             {% if response_code == 200 %}
-                <a href="https://api.immich-tiktok-remover.co.uk/logs?pod_id={{container_id}}">View pod logs</a>
+                <a href="https://api.immich-tiktok-remover.co.uk/logs?pod_id={{container_id}}" method>View pod logs</a>
+                <form action="https://api.immich-tiktok-remover.co.uk/logs?pod_id={{container_id}}" method="get">
+                    <input type="submit" value="Check container logs" />
+                </form>
             {% endif %}
         {% endif %}
 
