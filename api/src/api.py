@@ -82,8 +82,7 @@ def remove_deployment():
 
 @app.route('/logs', methods=['GET'])
 def kube_logs():
-    payload = request.get_json()
-    print(payload)
+
     pod_id = request.args.get('pod_id')
 
     command = 'kubectl logs {} -n immich-tiktok-remover-api --tail 20 | tr -d \'█\''.format(pod_id)
