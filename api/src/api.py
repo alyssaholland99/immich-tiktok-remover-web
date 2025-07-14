@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import subprocess, os, validators, time, re, requests
+import subprocess, os, validators, time, re, requests, json
 
 from helpers import *
 
@@ -91,7 +91,7 @@ def kube_logs():
 
     print(pod_log_filter)
 
-    return jsonify(pod_log_filter, status=200, mimetype='application/json'), 200
+    return json.dumps(pod_log_filter), 200
 
 if __name__ == '__main__':
     app.run(host="192.168.0.126")
