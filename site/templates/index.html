@@ -51,6 +51,20 @@
 
             <h4>Please note that this tool has a rate limit of 3hrs.</h4>
         <hr>
+        <h2>Self hosting</h2>
+            <p>
+                This project is really easy to host in a simple docker container, so if you want to ensure full privacy and security it's better to host it yourself!
+                <pre><b><p class="docker">docker-compose.yml</p></b><code>services:
+  immich-tiktok-remover:
+    image: alyssaholland99/immich-tiktok-remover:stable
+    environment:
+      IMMICH_URL: "https://immich.yourserver.co.uk/"
+      IMMICH_API: "your-immich-api-key"
+      RESTART_TIMEOUT: 3600 # Time in seconds the script waits to restart (default 1hr)
+                </code></pre>
+            </p>
+
+        <hr>
         <h2>Is it safe?</h2>
             <p>
                 All the code is available on GitHub here: <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> which you're free to check.

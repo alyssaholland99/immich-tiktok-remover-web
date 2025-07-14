@@ -16,6 +16,7 @@ body {
 /* Container to hold everything */
 .container {
     text-align: center;
+    min-width: 800px;
     max-width: 1500px;
     width: 100%;
     padding: 2rem;
@@ -38,6 +39,11 @@ h1 {
     color: #333;
 }
 
+p {
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
 h2, h4 {
     margin-top: 2rem;
     color: #222;
@@ -49,6 +55,7 @@ form {
     flex-direction: column;
     align-items: center;
     margin-bottom: 1rem;
+
 }
 
 label {
@@ -65,14 +72,16 @@ form label {
     color: #444;
     text-align: left;
     width: 100%;
+    font-size: 1.1rem; /* ← Increased font size */
 }
 
 form input[type="text"] {
     width: 100%;
-    max-width: 400px;
-    padding: 0.5rem;
+    max-width: 1000px;        /* optional: make input wider */
+    padding: 1rem;           /* increased padding for height */
+    font-size: 1.1rem;       /* increase text size */
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
 form .checkbox-group {
@@ -85,12 +94,12 @@ form .checkbox-group {
 form button {
     margin-top: 0rem;
     margin-bottom: 1rem;
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem 1.5rem;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -109,6 +118,7 @@ pre {
     text-align: left;
     margin-top: 1.5rem;
 }
+
 
 ol {
     text-align: left;
@@ -144,7 +154,7 @@ a:hover {
 }
 
 .form-row input[type="checkbox"] {
-    transform: scale(1.2);
+    transform: scale(1.6);
     cursor: pointer;
 }
 
@@ -168,4 +178,16 @@ a:hover {
     font-family: monospace;
     white-space: pre-wrap;
     text-align: left;
+}
+
+pre code {
+    display: block;
+    background: #f4f4f4;
+    padding: 1rem;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.95rem;
+    color: #333;
+    white-space: pre-wrap;
+    border: 2px solid black; /* <-- This adds the black border */
 }
