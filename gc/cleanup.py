@@ -11,7 +11,7 @@ def cleanup():
             print("Deleted deployment {}".format(deployment_name))
             os.popen("kubectl delete secret {}-auth -n immich-tiktok-remover-api".format(deployment_name.replace("itr", "immich-tiktok-remover"))).read()
             print("Deleted secret for {}".format(deployment_name))
-            release_secrets = os.popen("kubectl get secrets -n immich-tiktok-remover-api | awk '{print $1}' | grep {}".format(deployment_name)).read()
+            release_secrets = os.popen("kubectl get secrets -n immich-tiktok-remover-api | awk '\{print $1\}' | grep {}".format(deployment_name)).read()
             for secret in release_secrets.splitlines():
                 os.popen("kubectl delete secret {} -n immich-tiktok-remover-api".format(secret))
                 print("Deleted {} for {}".format(secret, deployment_name))
