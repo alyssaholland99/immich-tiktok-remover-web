@@ -40,8 +40,13 @@ def remove_tiktoks():
     fullname_override = "itr-" + get_hash(filename)
     secret_name = "immich-tiktok-remover-" + get_hash(filename)
 
+    restart_timeout: "86400"
+    
+    if "alyssaserver.co.uk" in immich_url:
+        restart_timeout: "3600"
+
     if repeat:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set RESTART_TIMEOUT={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
     else:
         os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
 
