@@ -109,7 +109,7 @@ def kube_logs():
     if not pod_id in immich_tiktok_pods:
         return "This pod no longer exists. Please submit a new pod request.", 404
 
-    command = 'kubectl logs {} -n immich-tiktok-remover-api --tail 20 | tr -d \'█\''.format(pod_id)
+    command = 'kubectl logs {} -n immich-tiktok-remover-api --tail 100 | tr -d \'█\''.format(pod_id)
 
     pod_logs = os.popen(command).read()
 
