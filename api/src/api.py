@@ -119,6 +119,8 @@ def kube_logs():
         if not "Progress:" in l:
             pod_log_filter += l + '<br>'
 
+    pod_log_filter = pod_log_filter.replace("Neither CUDA nor MPS are available - defaulting to CPU. Note: This module is much faster with a GPU.", "")
+
     pod_log_filter = pod_log_filter.replace("[1;32;40m", "").replace("[0m", "")
 
     if pod_log_filter == "":
