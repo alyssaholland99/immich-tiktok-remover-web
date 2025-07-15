@@ -242,8 +242,10 @@ pre code {
   }
 
   form button {
-    width: 100%;
+    width: 60%;
+    height: 5rem;
     font-size: 1.1rem;
     padding: 1rem;
+    font-size: 2rem;
   }
 }
