@@ -57,7 +57,7 @@ def remove_tiktoks():
         restart_timeout = "3600"
 
     if repeat:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set "RESTART_TIMEOUT=!!string {}" --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set-string RESTART_TIMEOUT={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
         print('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set "RESTART_TIMEOUT=!!string {}" --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
     else:
         os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
