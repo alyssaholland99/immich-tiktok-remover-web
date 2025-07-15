@@ -1,15 +1,26 @@
 from flask import Flask, jsonify, request
 import subprocess, os, validators, time, re, requests
 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 from helpers import *
 
 app = Flask(__name__)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
+)
 
 @app.route('/status', methods=['GET'])
+@limiter.limit("1/second")
 def get_status():
     return 'up', 200
 
 @app.route('/remove', methods=['POST'])
+@limiter.limit("6/minute")
 def remove_tiktoks():
 
     payload = request.get_json()
@@ -56,7 +67,9 @@ def remove_tiktoks():
     return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nContainer ID: ' + pod_id, 200
 
 @app.route('/stop', methods=['POST'])
+@limiter.limit("1/second")
 def remove_deployment():
+    return ## Unused
 
     payload = request.get_json()
     immich_url = payload['immich_url']
@@ -80,6 +93,7 @@ def remove_deployment():
         return 'No job with these parameters exist', 404
 
 @app.route('/logs', methods=['GET'])
+@limiter.limit("1/second")
 def kube_logs():
 
     pod_id = request.args.get('pod_id')
