@@ -80,10 +80,24 @@
         <hr>
         <h2>How does it work</h2>
             <p>
-                I run a personal server 24/7 and it annoyed me that there weren't any easy ways to remove TikTok videos. I found <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> by Marcus-indrek Simmer and decided to turn it into a web app.
+                I run a personal server 24/7 and it annoyed me that there weren't any easy ways to remove TikTok videos. I found <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> by Marcus-indrek Simmer and decided to turn it into a web app. 
+                A lot of credit really goes to them as this page would not exist without their work.
                 <br><br>
-                I also run a kubernetes cluster that's currently heavily under utilised. When you send an api requests to my server, it spins up a new deployment and runs the project on one of the nodes, therefore not loading my primary server too much. It won't be fast by any means, the nodes are low power mini PCs and can only do so much. 
+                This service checks your Immich instance for videos that match the TikTok filename, downloads them and then uses EasyOCR to first check the end (and one random) frame to see if it contains the 'TikTok' text. If it does then it moves them to the trash for your Immich user.
+                <br>
+                You can check the logs for your personal pod using the 'View pod logs' button to see exactly what the tool is doing. You'll need to manually refresh these logs to update them. If you have selected for the tool to run every 24hrs, you can keep checking this log file daily to ensure it keeps running. 
+                <br><br>
+                I also run a kubernetes cluster that's currently heavily under utilised. When you send an api requests to my server, it spins up a new deployment and runs the project on one of the nodes, therefore not loading my primary server too much. 
+                <br>
+                This is mostly a hobby project so it may not exist forever. I will be providing source code for all of this in case anyone wants to host it themselves (say if you're running a large Immich server with many users).
             </p>
+        <hr>
+        <h2>Important links</h2>
+            <ul>
+                <li>Immich TikTok Remover Source Code: <a href="https://github.com/mxc2/immich-tiktok-remover">https://github.com/mxc2/immich-tiktok-remover</a></li>
+                <li>My GitHub: <a href="https://github.com/alyssaholland99">https://github.com/alyssaholland99</a></li>
+                <li>mxc2's GitHub: <a href="https://github.com/mxc2">https://github.com/mxc2</a></li>
+            </ul>
     </div>
 </body>
 </html>
