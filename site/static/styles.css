@@ -202,7 +202,7 @@ pre code {
     border: 2px solid black; /* <-- This adds the black border */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .container {
     min-width: auto;       /* remove fixed min-width */
     width: 95%;            /* almost full width on small screens */
