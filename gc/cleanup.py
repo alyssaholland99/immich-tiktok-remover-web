@@ -9,6 +9,8 @@ def cleanup():
             deployment_name = pod.split("-")[0] + "-" + pod.split("-")[1]
             os.popen("kubectl delete deployment {} -n immich-tiktok-remover-api".format(deployment_name))
             print("Deleted deployment {}".format(deployment_name))
+            os.popen("kubectl delete secret {}-auth -n immich-tiktok-remover-api".format(deployment_name.replace("itr", "immich-tiktok-remover")))
+            print("Deleted secret for {}".format(deployment_name))
         else:
             print("{} is still running".format(pod))
 
