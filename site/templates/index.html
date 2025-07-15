@@ -77,6 +77,17 @@
                 <br><br>
                 Any security concerns/enquiries can be sent to <a href="mailto:alyssa@alyssaserver.co.uk">alyssa@alyssaserver.co.uk</a>
             </p>
+                <hr>
+        <h2>Public API</h2>
+            <p>
+                If you wanted to make your own script that removes your TikTok videos from my Immich server, you can use the public api to do so. For example I have provided a cURL command so you can test it yourself.
+                <pre><b><p class="docker">cURL command</p></b><code>curl -X POST -H "Content-Type: application/json" -d '{
+  "immich_url": "https://my.immich.app/",
+  "immich_api_key": "eyJhbGciOiJIUzI1NiIsInR...",
+  "repeat": false
+}' https://api.immich-tiktok-remover.co.uk/remove</code></pre>
+                Please be aware that the API is rate limited so there's no point spamming it. You can use the API to force your pod to do a new scan and deletion<b>every 3 hours</b> at a maximum. Please be aware that if you use the same URL and key as an earlier request it will overwrite the 'repeat' option.
+            </p>
         <hr>
         <h2>How does it work</h2>
             <p>
