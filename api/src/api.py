@@ -45,8 +45,10 @@ def remove_tiktoks():
     if not server_connection(immich_url, immich_api_key):
         return 'Invalid server details, please check your input', 400
     
-    if cache_file_exists(filename):
-        os.system('helm uninstall {} -n immich-tiktok-remover-api'.format(("immich-tiktok-remover-" + get_hash(filename))[:53]))
+
+    # Unused as gc has taken over this
+    # if cache_file_exists(filename):
+    #    os.system('helm uninstall {} -n immich-tiktok-remover-api'.format(("immich-tiktok-remover-" + get_hash(filename))[:53]))
 
     fullname_override = "itr-" + get_hash(filename)
     secret_name = "immich-tiktok-remover-" + get_hash(filename)
