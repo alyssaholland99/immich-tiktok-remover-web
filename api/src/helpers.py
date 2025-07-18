@@ -45,7 +45,7 @@ def key_valid(key):
     return re.search("^[A-Za-z0-9]{35,50}$", key)
 
 def pod_valid(key):
-    regexp = "itr-[a-f0-9]{32}-[a-f0-9]{8}-[a-z0-9]{5}"
+    regexp = "itr-[a-f0-9]{32}-[a-f0-9]{6,12}-[a-z0-9]{5}"
     return re.search(regexp, key)
 
 def server_connection(url, api_key):
