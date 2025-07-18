@@ -68,7 +68,12 @@
         <hr>
         <h2>Is it safe?</h2>
             <p>
-                All the code is available on GitHub here: <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> which you're free to check.
+                All the code for the pods themselves is available on GitHub here: <a href="https://github.com/mxc2/immich-tiktok-remover">Immich Tiktok Remover</a> which you're free to check.
+                <br><br>
+                All the code for the website, api and garbage collector is available on GitHub here: <a href="https://github.com/alyssaholland99/immich-tiktok-remover-web">Immich Tiktok Remover Web</a> which you're also free to check.
+                <br><br>
+                You can also see the <a href="https://api.immich-tiktok-remover.co.uk/status">API status</a> to check the current commit (via git log to show no modified files), the current directory 
+                and the systemd files being used to run the scripts on an Ubuntu VM
                 <br><br>
                 There's always a risk when you send your API key to an external service. Any keys sent are only stored in a kubernetes cluster for the deployments to use. 
                 To reduce the chance of a leak causing issues with your immich server I would recommend to only add the needed permissions for this tool to work (`asset.read` only)
