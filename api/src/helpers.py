@@ -49,6 +49,10 @@ def pod_valid(key):
     return re.search(regexp, key)
 
 def server_connection(url, api_key):
+
+    if not key_valid(api_key):
+        return False
+
     url = url + "api/server/ping"
     API_KEY = api_key
 
@@ -59,8 +63,6 @@ def server_connection(url, api_key):
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)
-
-    print(response)
 
     if response.status_code == 200:
         return True

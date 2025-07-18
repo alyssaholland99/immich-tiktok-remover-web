@@ -74,32 +74,6 @@ def remove_tiktoks():
 
     return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nContainer ID: ' + pod_id, 200
 
-@app.route('/stop', methods=['POST'])
-@limiter.limit("1/second")
-def remove_deployment():
-    return ## Unused
-
-    payload = request.get_json()
-    immich_url = payload['immich_url']
-    immich_api_key = payload['immich_api_key']
-
-    if immich_url[-1] != "/":
-        immich_url += "/"
-
-    if not key_valid(immich_api_key):
-        return 'Not a valid API key', 400
-
-    filename = "{}_{}".format(immich_url, immich_api_key[:10])
-
-    if not validators.url(immich_url):
-        return 'Not a valid URL', 400
-    
-    if cache_file_exists(filename):
-        os.system('helm uninstall {} -n immich-tiktok-remover-api'.format(("immich-tiktok-remover-" + get_hash(filename))[:53]))
-        return 'Stopping tool', 200
-    else:
-        return 'No job with these parameters exist', 404
-
 @app.route('/logs', methods=['GET'])
 @limiter.limit("2/second")
 def kube_logs():
