@@ -18,21 +18,22 @@ limiter = Limiter(
 @limiter.limit("1/second")
 def get_status():
 
+    single_break = "<br>"
     double_break = "<br><br>"
 
     api_status = "API Status: up" + double_break
 
-    api_status += "Working directory = {}".format(os.popen("pwd").read()) + double_break
+    api_status += "Working directory:" + single_break +  os.popen("pwd").read() + double_break
 
-    api_status += "Systemd Site File = {}".format(os.popen("cat /etc/systemd/system/itr-site.service").read()) + double_break
+    api_status += "Systemd Site File:" + single_break + os.popen("cat /etc/systemd/system/itr-site.service").read().replace("\n", single_break) + double_break
     
-    api_status += "Systemd API File = {}".format(os.popen("cat /etc/systemd/system/itr-api.service").read()) + double_break
+    api_status += "Systemd API File:" + single_break + os.popen("cat /etc/systemd/system/itr-api.service").read().replace("\n", single_break) + double_break
     
-    api_status += "Systemd GC File = {}".format(os.popen("cat /etc/systemd/system/itr-gc.service").read()) + double_break
+    api_status += "Systemd GC File:" + single_break + os.popen("cat /etc/systemd/system/itr-gc.service").read().replace("\n", single_break) + double_break
 
-    api_status += "Git log = {}".format(os.popen("git show --summary").read()) + double_break
+    api_status += "Git log:" + single_break + os.popen("git show --summary").read().replace("\n", single_break) + double_break
 
-    api_status += "Current dir ls = {}".format(os.popen("ls").read()) + double_break
+    api_status += "Current dir ls:" + single_break + os.popen("ls").read() + double_break
 
     return api_status, 200
 
