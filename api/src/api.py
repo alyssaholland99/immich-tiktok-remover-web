@@ -23,7 +23,7 @@ def get_status():
 
     api_status = "API Status: up" + double_break
 
-    api_status += "Working directory:" + single_break +  get_api_status_command("pwd") + double_break
+    api_status += "Working directory:" +  get_api_status_command("pwd") + double_break
 
     api_status += "Systemd Site File:" + get_api_status_command("cat /etc/systemd/system/itr-site.service") + double_break
     
