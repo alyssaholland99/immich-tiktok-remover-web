@@ -70,4 +70,4 @@ def server_connection(url, api_key):
 
 def get_api_status_command(command):
     single_break = "<br>"
-    return single_break + os.popen("ls").read().replace("\n", single_break)
+    return single_break + os.popen(command).read().replace("\n", single_break)
