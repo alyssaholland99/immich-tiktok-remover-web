@@ -19,7 +19,7 @@ limiter = Limiter(
 def get_status():
 
     single_break = "<br>"
-    double_break = "<br><br>"
+    double_break = "<br><hr><br>"
 
     api_status = "API Status: up" + double_break
 
