@@ -67,3 +67,7 @@ def server_connection(url, api_key):
     if response.status_code == 200:
         return True
     return False
+
+def get_api_status_command(command):
+    single_break = "<br>"
+    return single_break + os.popen("ls").read().replace("\n", single_break)

@@ -23,17 +23,17 @@ def get_status():
 
     api_status = "API Status: up" + double_break
 
-    api_status += "Working directory:" + single_break +  os.popen("pwd").read() + double_break
+    api_status += "Working directory:" + single_break +  get_api_status_command("pwd") + double_break
 
-    api_status += "Systemd Site File:" + single_break + os.popen("cat /etc/systemd/system/itr-site.service").read().replace("\n", single_break) + double_break
+    api_status += "Systemd Site File:" + get_api_status_command("cat /etc/systemd/system/itr-site.service") + double_break
     
-    api_status += "Systemd API File:" + single_break + os.popen("cat /etc/systemd/system/itr-api.service").read().replace("\n", single_break) + double_break
+    api_status += "Systemd API File:" + get_api_status_command("cat /etc/systemd/system/itr-api.service") + double_break
     
-    api_status += "Systemd GC File:" + single_break + os.popen("cat /etc/systemd/system/itr-gc.service").read().replace("\n", single_break) + double_break
+    api_status += "Systemd GC File:" + get_api_status_command("cat /etc/systemd/system/itr-gc.service") + double_break
 
-    api_status += "Git log:" + single_break + os.popen("git show --summary").read().replace("\n", single_break) + double_break
+    api_status += "Git log:" + get_api_status_command("git show --summary") + double_break
 
-    api_status += "Current dir ls:" + single_break + os.popen("ls").read() + double_break
+    api_status += "Current dir ls:" + get_api_status_command("ls") + double_break
 
     return api_status, 200
 
