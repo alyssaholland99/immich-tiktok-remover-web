@@ -44,10 +44,11 @@ def too_many_requests(filename):
 def key_valid(key):
     return re.search("^[A-Za-z0-9]{35,50}$", key)
 
+def pod_valid(key):
+    regexp = "itr-[a-f0-9]{32}-[a-f0-9]{8}-[a-z0-9]{5}"
+    return re.search(regexp, key)
+
 def server_connection(url, api_key):
-    """
-    Ping the server to check if it's reachable.
-    """
     url = url + "api/server/ping"
     API_KEY = api_key
 

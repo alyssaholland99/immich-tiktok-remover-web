@@ -101,10 +101,13 @@ def remove_deployment():
         return 'No job with these parameters exist', 404
 
 @app.route('/logs', methods=['GET'])
-@limiter.limit("1/second")
+@limiter.limit("2/second")
 def kube_logs():
 
     pod_id = request.args.get('pod_id')
+
+    if not pod_valid(pod_id):
+        return 'Not a valid pod', 400
 
     immich_tiktok_pods = os.popen("kubectl get pods -n immich-tiktok-remover-api --no-headers | awk '{print $1}'").read().splitlines()
 
