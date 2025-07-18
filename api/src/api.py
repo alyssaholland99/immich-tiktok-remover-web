@@ -17,7 +17,24 @@ limiter = Limiter(
 @app.route('/status', methods=['GET'])
 @limiter.limit("1/second")
 def get_status():
-    return 'up', 200
+
+    double_break = "<br><br>"
+
+    api_status = "API Status: up" + double_break
+
+    api_status += "Working directory = {}".format(os.popen("pwd").read()) + double_break
+
+    api_status += "Systemd Site File = {}".format(os.popen("cat /etc/systemd/system/itr-site.service").read()) + double_break
+    
+    api_status += "Systemd API File = {}".format(os.popen("cat /etc/systemd/system/itr-api.service").read()) + double_break
+    
+    api_status += "Systemd GC File = {}".format(os.popen("cat /etc/systemd/system/itr-gc.service").read()) + double_break
+
+    api_status += "Git log = {}".format(os.popen("git show --summary").read()) + double_break
+
+    api_status += "Current dir ls = {}".format(os.popen("ls").read()) + double_break
+
+    return api_status, 200
 
 @app.route('/remove', methods=['POST'])
 @limiter.limit("6/minute")
