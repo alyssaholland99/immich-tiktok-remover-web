@@ -95,10 +95,9 @@ def kube_logs():
     immich_tiktok_pods = os.popen("kubectl get pods -n immich-tiktok-remover-api --no-headers | awk '{print $1}'").read()
 
     pod_id = ""
-    while pod_id == "":
-        for pod in immich_tiktok_pods.splitlines():
-            if request.args.get('pod_id') == pod.rsplit("-", 2)[0]:
-                pod_id = pod
+    for pod in immich_tiktok_pods.splitlines():
+        if request.args.get('pod_id') == pod.rsplit("-", 2)[0]:
+            pod_id = pod
 
     if pod_id == "":
         return "This pod no longer exists. Please submit a new pod request.", 404
