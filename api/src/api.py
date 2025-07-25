@@ -84,7 +84,7 @@ def remove_tiktoks():
     else:
         os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
 
-    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\Deployment ID: ' + fullname_override, 200
+    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nDeployment ID: ' + fullname_override, 200
 
 @app.route('/logs', methods=['GET'])
 @limiter.limit("2/second")
