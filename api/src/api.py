@@ -100,13 +100,13 @@ def kube_logs():
             if request.args.get('pod_id') == pod.rsplit("-", 2)[0]:
                 pod_id = pod
 
+    if pod_id == "":
+        return "This pod no longer exists. Please submit a new pod request.", 404
+
     if not pod_valid(pod_id):
         return 'Not a valid pod', 400
 
     immich_tiktok_pods = os.popen("kubectl get pods -n immich-tiktok-remover-api --no-headers | awk '{print $1}'").read().splitlines()
-
-    if not pod_id in immich_tiktok_pods:
-        return "This pod no longer exists. Please submit a new pod request.", 404
 
     command = 'kubectl logs {} -n immich-tiktok-remover-api --timestamps --tail 200 | tr -d \'█\''.format(pod_id)
 
