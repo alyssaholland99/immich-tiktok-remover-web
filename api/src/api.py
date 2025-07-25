@@ -78,13 +78,15 @@ def remove_tiktoks():
     if 'alyssaserver.co.uk' in immich_url:
         restart_timeout = "3600"
 
-    if repeat:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set-string RESTART_TIMEOUT={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
-        print('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set "RESTART_TIMEOUT=!!string {}" --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
-    else:
-        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
+    hashed_deployment = ("itr-" + get_hash(filename))[:53]
 
-    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nDeployment ID: ' + fullname_override, 200
+    if repeat:
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set-string RESTART_TIMEOUT={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, hashed_deployment))
+        print('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set "RESTART_TIMEOUT=!!string {}" --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=stable -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, restart_timeout, fullname_override, secret_name, hashed_deployment))
+    else:
+        os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, hashed_deployment))
+
+    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nDeployment ID: ' + hashed_deployment, 200
 
 @app.route('/logs', methods=['GET'])
 @limiter.limit("2/second")
