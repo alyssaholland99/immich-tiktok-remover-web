@@ -62,7 +62,10 @@ def server_connection(url, api_key):
         'Accept': 'application/json'
     }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    try:
+        response = requests.request("GET", url, headers=headers, data=payload)
+    except:
+        return False
 
     if response.status_code == 200:
         return True
