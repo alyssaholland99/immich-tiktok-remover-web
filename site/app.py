@@ -15,7 +15,7 @@ def index():
         payload = {'immich_url': immich_url, 'immich_api_key': immich_api, 'repeat': repeat}
         response = requests.post('https://api.immich-tiktok-remover.co.uk//remove', json=payload)
         if "Container ID: " in response.text:
-            container_id = str(response.text.split("Container ID: ")[1])
+            container_id = str(response.text.split("Deployment ID: ")[1])
         return render_template('index.html', api_response=response.text, response_code=response.status_code, container_id=container_id)
     return render_template('index.html')
 

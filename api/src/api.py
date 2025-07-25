@@ -23,7 +23,7 @@ def get_status():
 
     api_status = "API Status: up" + double_break
 
-    api_status += "Web server date and time:" +  get_api_status_command("date") + double_break
+    api_status += "Web & API server date and time:" +  get_api_status_command("date") + double_break
 
     api_status += "Working directory:" +  get_api_status_command("pwd") + double_break
 
@@ -84,21 +84,19 @@ def remove_tiktoks():
     else:
         os.system('helm upgrade --set IMMICH_URL={} --set IMMICH_API={} --set fullnameOverride={} --set SECRET_NAME={} --set image.tag=kube_testing -n immich-tiktok-remover-api -i {} ../immich-tiktok-remover/'.format(immich_url, immich_api_key, fullname_override, secret_name, ("itr-" + get_hash(filename))[:53]))
 
-    immich_tiktok_pods = os.popen("kubectl get pods -n immich-tiktok-remover-api --no-headers | awk '{print $1}'").read()
-
-    pod_id = ""
-    while pod_id == "":
-        for pod in immich_tiktok_pods.splitlines():
-            if fullname_override in pod:
-                pod_id = pod
-
-    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\nContainer ID: ' + pod_id, 200
+    return 'Starting process...\nConnected to your Immich instance.\nContainer Started.\nKeep an eye on your Immich instance, the tool is currently running.\Deployment ID: ' + fullname_override, 200
 
 @app.route('/logs', methods=['GET'])
 @limiter.limit("2/second")
 def kube_logs():
 
-    pod_id = request.args.get('pod_id')
+    immich_tiktok_pods = os.popen("kubectl get pods -n immich-tiktok-remover-api --no-headers | awk '{print $1}'").read()
+
+    pod_id = ""
+    while pod_id == "":
+        for pod in immich_tiktok_pods.splitlines():
+            if request.args.get('pod_id') in pod:
+                pod_id = pod
 
     if not pod_valid(pod_id):
         return 'Not a valid pod', 400
