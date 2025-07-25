@@ -95,7 +95,7 @@ def kube_logs():
     pod_id = ""
     while pod_id == "":
         for pod in immich_tiktok_pods.splitlines():
-            if request.args.get('pod_id') in pod:
+            if request.args.get('pod_id') == pod.rsplit("-", 1)[0]:
                 pod_id = pod
 
     if not pod_valid(pod_id):
